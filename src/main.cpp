@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <thread>
 #include <string>
-#include <cxxopts.hpp>
+// #include <cxxopts.hpp> // 以后再说,目前还用不到的内容
+#include <unistd.h>
+#include <sys/types.h>
+#include <windows.h>
 void usecmd(std::string str)
 {
     system(str.c_str());
@@ -24,8 +27,5 @@ int main(int argc, char const *argv[])
     {
         cout << argv[i] << "\n";
     }
-    usethread("explorer .");
-    usethread("explorer ..");
-    int x;
-    cin >> x;
+    
 }
