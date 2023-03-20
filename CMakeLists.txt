@@ -18,5 +18,3 @@ include_directories(include)
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 
 target_link_libraries(dian-cli cxxopts::cxxopts)
-
-

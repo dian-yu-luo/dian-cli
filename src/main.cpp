@@ -1,31 +1,48 @@
-#include <iostream>
-#include <foo.hpp>
-#include <stdlib.h>
-#include <thread>
-#include <string>
-// #include <cxxopts.hpp> // 以后再说,目前还用不到的内容
-#include <unistd.h>
-#include <sys/types.h>
+#ifdef _WIN32
 #include <windows.h>
-void usecmd(std::string str)
-{
-    system(str.c_str());
-}
-
-void usethread(std::string str)
-{
-    std::thread f(usecmd, str);
-    f.detach();
-}
-
+#endif
+#include <stdio.h>
 int main(int argc, char const *argv[])
 {
-    using namespace std;
-    cout << "参数数量:";
-    cout << argc << "\n";
-    for (size_t i = 0; i < static_cast<size_t>(argc); i++)
+
+#ifdef _WIN32
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    ZeroMemory(&pi, sizeof(pi));
+
+    if (argc != 2)
     {
-        cout << argv[i] << "\n";
+        printf("Usage: %s [cmdline]\n", argv[0]);
+        return 0;
     }
-    
+
+    // Start the child process.
+    if (!CreateProcess(NULL,           // No module name (use command line)
+                       (LPSTR)argv[1], // Command line
+                       NULL,           // Process handle not inheritable
+                       NULL,           // Thread handle not inheritable
+                       FALSE,          // Set handle inheritance to FALSE
+                       0,              // No creation flags
+                       NULL,           // Use parent's environment block
+                       NULL,           // Use parent's starting directory
+                       &si,            // Pointer to STARTUPINFO structure
+                       &pi)            // Pointer to PROCESS_INFORMATION structure
+    )
+    {
+        printf("CreateProcess failed (%d).\n", GetLastError());
+        return 0;
+    }
+
+    // Wait until child process exits.
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    // Close process and thread handles.
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+#else
+    printf("hello");
+#endif
 }
