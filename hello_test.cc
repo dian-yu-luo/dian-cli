@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-
+#include <nlohmann/json.hpp>
+#include <fstream>
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions)
 {
@@ -14,12 +15,15 @@ TEST(HelloTest, BasicAssertions)
     printf("hello\n");
 }
 
-TEST(HelloTest,be){
-    printf("please do me a feafer\n");
-    int a=100;
-    if (a==90){
-        printf("over");
-    } else{
-        printf("nice");
-    }
+TEST(HelloTest, json)
+{
+    using json = nlohmann::json;
+    std::ifstream f("example.json");
+    json data = json::parse(f);
+    f.close();
+    std::ofstream fi("output.json");
+    data["happy"] = true;
+    data["list"] = "我真牛逼";
+    fi << data;
+    fi.close();
 }

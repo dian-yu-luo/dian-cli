@@ -19,13 +19,20 @@ FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
   GIT_TAG v1.13.0)
-
 FetchContent_MakeAvailable(googletest)
+
+# 下载和构建 nlohmann/json 库
+FetchContent_Declare(
+  json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.10.2)
+FetchContent_MakeAvailable(json)
+
 enable_testing()
 include(GoogleTest)
 
 add_executable(hello_test hello_test.cc)
-target_link_libraries(hello_test GTest::gtest_main)
+target_link_libraries(hello_test GTest::gtest_main nlohmann_json::nlohmann_json)
 gtest_discover_tests(hello_test)
 
 include_directories(include)
