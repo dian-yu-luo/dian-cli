@@ -1,15 +1,16 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <windows.h>
 
 void initwin()
 {
-    system("chcp 65001 > nul");
+    SetConsoleOutputCP(65001);
 }
 
 int main(int argc, char const *argv[])
 {
     initwin();
-    
+
     
 
     return 0;
