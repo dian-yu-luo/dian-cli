@@ -2,20 +2,24 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <spdlog/spdlog.h>
+#include <gtest/gtest.h>
 
-TEST(HelloTest, BasicAssertions) {
+TEST(HelloTest, BasicAssertions)
+{
     printf("我的大兄弟啊\n");
     // Expect two strings not to be equal.
     EXPECT_STRNE("hello", "world");
     // Expect equality.
     EXPECT_EQ(7 * 6, 42);
-    for (size_t i = 0; i < 100; i++) {
+    for (size_t i = 0; i < 100; i++)
+    {
         i++;
     }
     printf("hello\n");
 }
 
-TEST(HelloTest, json) {
+TEST(HelloTest, json)
+{
 
 #ifdef _WIN32
     system("chcp 65001 > nul");
@@ -32,7 +36,8 @@ TEST(HelloTest, json) {
     printf("我真牛逼\n");
 }
 
-TEST(HelloTest, testspdlog) {
+TEST(HelloTest, testspdlog)
+{
     spdlog::info("我的大兄弟啊");
     spdlog::error("Some error message with arg: {}", 1);
 
