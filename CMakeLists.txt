@@ -42,3 +42,6 @@ include_directories(include)
 
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog)
+
+add_executable(win-dian-cli src/winmain.cpp)
+target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog nlohmann_json::nlohmann_json)
