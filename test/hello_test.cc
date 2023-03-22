@@ -2,22 +2,24 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <spdlog/spdlog.h>
-// Demonstrate some basic assertions.
-TEST(HelloTest, BasicAssertions)
-{
+
+TEST(HelloTest, BasicAssertions) {
+    printf("我的大兄弟啊\n");
     // Expect two strings not to be equal.
     EXPECT_STRNE("hello", "world");
     // Expect equality.
     EXPECT_EQ(7 * 6, 42);
-    for (size_t i = 0; i < 100; i++)
-    {
+    for (size_t i = 0; i < 100; i++) {
         i++;
     }
     printf("hello\n");
 }
 
-TEST(HelloTest, json)
-{
+TEST(HelloTest, json) {
+
+#ifdef _WIN32
+    system("chcp 65001 > nul");
+#endif
     using json = nlohmann::json;
     std::ifstream f("example.json");
     json data = json::parse(f);
@@ -27,11 +29,10 @@ TEST(HelloTest, json)
     data["list"] = "我真牛逼";
     fi << data;
     fi.close();
+    printf("我真牛逼\n");
 }
 
-TEST(HelloTest, testspdlog)
-{
-    system("chcp 65001");
+TEST(HelloTest, testspdlog) {
     spdlog::info("我的大兄弟啊");
     spdlog::error("Some error message with arg: {}", 1);
 

@@ -33,7 +33,7 @@ FetchContent_MakeAvailable(spdlog)
 enable_testing()
 include(GoogleTest)
 
-add_executable(hello_test hello_test.cc)
+add_executable(hello_test test/hello_test.cc)
 target_link_libraries(hello_test GTest::gtest_main nlohmann_json::nlohmann_json
                       spdlog::spdlog)
 gtest_discover_tests(hello_test)
