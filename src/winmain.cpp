@@ -28,7 +28,7 @@ int main()
     {
         std::cout << title << std::endl;
     }
-    wintools w;
+    WinTools w;
     w.testwin();
     return 0;
 }

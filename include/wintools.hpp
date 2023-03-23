@@ -3,16 +3,16 @@
 #include <iostream>
 #include <windows.h>
 
-class wintools
+class WinTools
 {
 public:
-	wintools();
-	wintools(const wintools &) = default;
-	wintools(wintools &&) = default;
-	wintools &operator=(const wintools &);
-	wintools &operator=(wintools &&);
+	WinTools();
+	WinTools(const WinTools &) = default;
+	WinTools(WinTools &&) = default;
+	WinTools &operator=(const WinTools &);
+	WinTools &operator=(WinTools &&);
 
-	~wintools();
+	~WinTools();
 	void testwin();
 };
 

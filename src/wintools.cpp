@@ -1,14 +1,14 @@
 #include "wintools.hpp"
 
-wintools::wintools()
+WinTools::WinTools()
 {
 }
 
-wintools::~wintools()
+WinTools::~WinTools()
 {
 }
 
-void wintools::testwin()
+void WinTools::testwin()
 {
     printf("hello test iwn\n");
 }
