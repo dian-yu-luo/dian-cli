@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <wintools.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -28,6 +28,7 @@ int main()
     {
         std::cout << title << std::endl;
     }
-
+    wintools w;
+    w.testwin();
     return 0;
 }
