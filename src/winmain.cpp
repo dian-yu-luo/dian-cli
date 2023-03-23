@@ -1,17 +1,33 @@
+#include <Windows.h>
 #include <iostream>
-#include <nlohmann/json.hpp>
-#include <windows.h>
+#include <vector>
+#include <string>
 
-void initwin()
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
-    SetConsoleOutputCP(65001);
+    std::vector<std::string> *window_titles = reinterpret_cast<std::vector<std::string> *>(lParam);
+    if (IsWindowVisible(hwnd))
+    {
+        HWND parent = GetWindow(hwnd, GW_OWNER);
+        if (parent == NULL)
+        {
+            char title[1024];
+            GetWindowText(hwnd, title, sizeof(title));
+            window_titles->push_back(std::string(title));
+        }
+    }
+    return TRUE;
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
-    initwin();
+    std::vector<std::string> window_titles;
+    EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(&window_titles));
 
-    
+    for (const auto &title : window_titles)
+    {
+        std::cout << title << std::endl;
+    }
 
     return 0;
 }

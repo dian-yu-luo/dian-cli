@@ -38,10 +38,15 @@ target_link_libraries(hello_test GTest::gtest_main nlohmann_json::nlohmann_json
                       spdlog::spdlog)
 gtest_discover_tests(hello_test)
 
+add_executable(simple_test test/simple_test.cc)
+target_link_libraries(simple_test GTest::gtest_main)
+gtest_discover_tests(simple_test)
+
 include_directories(include)
 
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog)
 
 add_executable(win-dian-cli src/winmain.cpp)
-target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog nlohmann_json::nlohmann_json)
+target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog
+                      nlohmann_json::nlohmann_json)
