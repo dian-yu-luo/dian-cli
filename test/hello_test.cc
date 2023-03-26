@@ -1,16 +1,18 @@
-#include <gtest/gtest.h>
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <spdlog/spdlog.h>
-#include <gtest/gtest.h>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-TEST(HelloTest, BasicAssertions)
+#include <doctest/doctest.h>
+
+TEST_CASE("hello endz")
 {
+#ifdef _WIN32
+        system("chcp 65001 > nul");
+#endif
     printf("我的大兄弟啊\n");
     // Expect two strings not to be equal.
-    EXPECT_STRNE("hello", "world");
-    // Expect equality.
-    EXPECT_EQ(7 * 6, 42);
+
     for (size_t i = 0; i < 100; i++)
     {
         i++;
@@ -18,12 +20,9 @@ TEST(HelloTest, BasicAssertions)
     printf("hello\n");
 }
 
-TEST(HelloTest, json)
+TEST_CASE("hello eaand")
 {
 
-#ifdef _WIN32
-    system("chcp 65001 > nul");
-#endif
     using json = nlohmann::json;
     std::ifstream f("example.json");
     json data = json::parse(f);
@@ -36,7 +35,7 @@ TEST(HelloTest, json)
     printf("我真牛逼\n");
 }
 
-TEST(HelloTest, testspdlog)
+TEST_CASE("hellozz end")
 {
     spdlog::info("我的大兄弟啊");
     spdlog::error("Some error message with arg: {}", 1);

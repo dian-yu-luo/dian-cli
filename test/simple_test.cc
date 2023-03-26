@@ -1,7 +1,11 @@
-#include <gtest/gtest.h>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>
 
-TEST(simple, test)
+TEST_CASE("hello end")
 {
-    printf("hello this if for me");
-    printf("hello this if for me");
+    printf("hello this if for me\n");
+    printf("hello this if for me\n");
+    printf("hello this if for me\n");
+    printf("hello this if for me\n");
+    printf("hello this if for me\n");
 }

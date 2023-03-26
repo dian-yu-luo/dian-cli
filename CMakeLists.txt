@@ -12,10 +12,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(cxxopts)
 
 FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG v1.13.0)
-FetchContent_MakeAvailable(googletest)
+  doctest
+  GIT_REPOSITORY https://github.com/onqtam/doctest.git
+  GIT_TAG v2.4.11)
+FetchContent_MakeAvailable(doctest)
 
 FetchContent_Declare(
   json
@@ -30,17 +30,12 @@ FetchContent_Declare(
   GIT_TAG v1.9.2)
 FetchContent_MakeAvailable(spdlog)
 
-enable_testing()
-include(GoogleTest)
-
-add_executable(hello_test test/hello_test.cc test/json_test.cc)
-target_link_libraries(hello_test GTest::gtest_main nlohmann_json::nlohmann_json
+add_executable(hello_test test/hello_test.cc)
+target_link_libraries(hello_test doctest::doctest nlohmann_json::nlohmann_json
                       spdlog::spdlog)
-gtest_discover_tests(hello_test)
 
 add_executable(simple_test test/simple_test.cc)
-target_link_libraries(simple_test GTest::gtest_main)
-gtest_discover_tests(simple_test)
+target_link_libraries(simple_test doctest::doctest)
 
 include_directories(include)
 
