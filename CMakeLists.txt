@@ -4,6 +4,17 @@ project(dian-cli)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# 添加资源目录
+set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/res)
+file(GLOB_RECURSE RESOURCES ${RESOURCES_DIR}/*)
+
+# 将资源复制到输出目录
+foreach(RESOURCE ${RESOURCES})
+  file(RELATIVE_PATH RESOURCE_PATH ${RESOURCES_DIR} ${RESOURCE})
+  configure_file(${RESOURCE} ${CMAKE_CURRENT_BINARY_DIR}/${RESOURCE_PATH}
+                 COPYONLY)
+endforeach()
+
 include(FetchContent)
 FetchContent_Declare(
   cxxopts
@@ -37,10 +48,14 @@ target_link_libraries(hello_test doctest::doctest nlohmann_json::nlohmann_json
 add_executable(simple_test test/simple_test.cc)
 target_link_libraries(simple_test doctest::doctest)
 
+add_executable(json_test test/json_test.cc)
+target_link_libraries(json_test doctest::doctest nlohmann_json::nlohmann_json)
+
 include_directories(include)
 
 add_executable(dian-cli src/main.cpp src/foo.cpp)
-target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog)
+target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog
+                      nlohmann_json::nlohmann_json spdlog::spdlog)
 
 add_executable(win-dian-cli src/winmain.cpp src/wintools.cpp)
 target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog
