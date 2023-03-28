@@ -5,6 +5,7 @@
 
 int main()
 {
+    system("chcp 65001 > nul");
 
     WinTools w;
     w.GetWindowTitles();

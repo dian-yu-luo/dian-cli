@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 # 添加资源目录
 set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/res)
 file(GLOB_RECURSE RESOURCES ${RESOURCES_DIR}/*)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/output/)
 
 # 将资源复制到输出目录
 foreach(RESOURCE ${RESOURCES})
@@ -21,6 +22,19 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
   GIT_TAG v3.1.1)
 FetchContent_MakeAvailable(cxxopts)
+
+include(FetchContent)
+
+FetchContent_Declare(
+  ftxui
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
+  GIT_TAG v4.0.0)
+
+FetchContent_GetProperties(ftxui)
+if(NOT ftxui_POPULATED)
+  FetchContent_Populate(ftxui)
+  add_subdirectory(${ftxui_SOURCE_DIR} ${ftxui_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
 
 FetchContent_Declare(
   doctest
@@ -40,6 +54,7 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/gabime/spdlog.git
   GIT_TAG v1.9.2)
 FetchContent_MakeAvailable(spdlog)
+include_directories(include)
 
 add_executable(hello_test test/hello_test.cc)
 target_link_libraries(hello_test doctest::doctest nlohmann_json::nlohmann_json
@@ -51,7 +66,13 @@ target_link_libraries(simple_test doctest::doctest)
 add_executable(json_test test/json_test.cc)
 target_link_libraries(json_test doctest::doctest nlohmann_json::nlohmann_json)
 
-include_directories(include)
+# 构建 tui测试文件
+add_executable(ftx_test test/ftx_test.cc)
+target_link_libraries(
+  ftx_test
+  PRIVATE ftxui::screen
+  PRIVATE ftxui::dom
+  PRIVATE ftxui::component)
 
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog
