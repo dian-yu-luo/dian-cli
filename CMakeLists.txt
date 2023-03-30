@@ -23,8 +23,8 @@ FetchContent_Declare(
   GIT_TAG v3.1.1)
 FetchContent_MakeAvailable(cxxopts)
 
-include(FetchContent)
-
+# 当我想看一眼ftxui 的样例的时候把下面注释掉
+set(FTXUI_BUILD_EXAMPLES OFF)
 FetchContent_Declare(
   ftxui
   GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
@@ -73,11 +73,16 @@ target_link_libraries(
   PRIVATE ftxui::screen
   PRIVATE ftxui::dom
   PRIVATE ftxui::component)
-
+# 通用工具
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog
                       nlohmann_json::nlohmann_json spdlog::spdlog)
-
+# windows 特异的软件
 add_executable(win-dian-cli src/winmain.cpp src/wintools.cpp)
 target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog
+                      nlohmann_json::nlohmann_json)
+
+add_executable(win-dian-d src/winmaind.cpp src/wintools.cpp)
+target_link_options(win-dian-d PRIVATE "-mwindows")
+target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog
                       nlohmann_json::nlohmann_json)
