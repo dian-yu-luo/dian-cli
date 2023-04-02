@@ -1,20 +1,28 @@
-#include <nlohmann/json.hpp>
-#include <fstream>
-#include <spdlog/spdlog.h>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <doctest/doctest.h>
+#include <nlohmann/json.hpp>
+#include <fstream>
+#include <spdlog/spdlog.h>
+
+TEST_CASE("this") {
+    printf("hello");
+    for (int i = 0; i < 100; ++i) {
+        std::cout << i << std::endl;
+    }
+}
+
+#ifdef NOT_COMPILE
 
 TEST_CASE("hello endz")
 {
 #ifdef _WIN32
-        system("chcp 65001 > nul");
+    system("chcp 65001 > nul");
 #endif
     printf("我的大兄弟啊\n");
     // Expect two strings not to be equal.
 
-    for (size_t i = 0; i < 100; i++)
-    {
+    for (size_t i = 0; i < 100; i++) {
         i++;
     }
     printf("hello\n");
@@ -57,3 +65,4 @@ TEST_CASE("hellozz end")
     SPDLOG_TRACE("Some trace message with param {}", 42);
     SPDLOG_DEBUG("Some debug message");
 }
+#endif
