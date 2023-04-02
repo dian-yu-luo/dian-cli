@@ -86,3 +86,7 @@ add_executable(win-dian-d src/winmaind.cpp src/wintools.cpp)
 target_link_options(win-dian-d PRIVATE "-mwindows")
 target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog
                       nlohmann_json::nlohmann_json)
+
+add_executable(ime-dian-d src/imemain.cpp)
+target_link_libraries(ime-dian-d imm32)
+set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
