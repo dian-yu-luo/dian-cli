@@ -10,8 +10,12 @@ g++ imemain.cpp -o ime.exe -limm32  -lShlwapi -lpsapi -mwindows
 #include <psapi.h>
 #include <fstream>
 #include <Shlwapi.h>
+#include <json/json.h>
+
 // Global variable.
 HWINEVENTHOOK g_hook;
+std::string filename = "config_ime.json";
+Json::Value root;
 
 VOID CALLBACK WinEventsProc(HWINEVENTHOOK hWinEventHook, DWORD dwEvent, HWND hwnd, LONG idObject, LONG idChild, DWORD dwEventThread, DWORD dwmsEventTime)
 {
@@ -79,6 +83,22 @@ void ShutdownMSAA()
 
 int main(int argc, char const *argv[])
 {
+    std::ifstream file(filename);
+    if (file.fail())
+    {
+        std::cout << filename << " doesn't exist, creating new JSON file" << std::endl;
+        root["software"] = Json::arrayValue;
+        std::ofstream outfile(filename);
+        outfile << root << std::endl;
+        outfile.close();
+    }
+    else
+    {
+        file >> root;
+        file.close();
+        std::cout << root << std::endl;
+    }
+
     printf("start\n");
     InitializeMSAA();
     MSG msg;
