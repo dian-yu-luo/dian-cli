@@ -5,3 +5,5 @@
 /res
 /out
 /src/*.exe
+/CMakeSettings.json
+/.vs 
