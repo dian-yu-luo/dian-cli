@@ -1,7 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <doctest/doctest.h>
-#include <nlohmann/json.hpp>
 #include <fstream>
 #include <spdlog/spdlog.h>
 
@@ -28,20 +27,6 @@ TEST_CASE("hello endz")
     printf("hello\n");
 }
 
-TEST_CASE("hello eaand")
-{
-
-    using json = nlohmann::json;
-    std::ifstream f("example.json");
-    json data = json::parse(f);
-    f.close();
-    std::ofstream fi("output.json");
-    data["happy"] = true;
-    data["list"] = "我真牛逼";
-    fi << data;
-    fi.close();
-    printf("我真牛逼\n");
-}
 
 TEST_CASE("hellozz end")
 {

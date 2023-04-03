@@ -43,10 +43,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(doctest)
 
 FetchContent_Declare(
-  json
-  GIT_REPOSITORY https://github.com/nlohmann/json.git
-  GIT_TAG v3.10.2)
-FetchContent_MakeAvailable(json)
+  jsoncpp
+  GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+  GIT_TAG 1.9.4)
+FetchContent_MakeAvailable(jsoncpp)
 
 # 下载和构建 spdlog 库
 FetchContent_Declare(
@@ -57,14 +57,13 @@ FetchContent_MakeAvailable(spdlog)
 include_directories(include)
 
 add_executable(hello_test test/hello_test.cc)
-target_link_libraries(hello_test doctest::doctest nlohmann_json::nlohmann_json
-                      spdlog::spdlog)
+target_link_libraries(hello_test doctest::doctest spdlog::spdlog)
 
 add_executable(simple_test test/simple_test.cc)
 target_link_libraries(simple_test doctest::doctest)
 
 add_executable(json_test test/json_test.cc)
-target_link_libraries(json_test doctest::doctest nlohmann_json::nlohmann_json)
+target_link_libraries(json_test doctest::doctest jsoncpp_lib)
 
 # 构建 tui测试文件
 add_executable(ftx_test test/ftx_test.cc)
@@ -75,17 +74,14 @@ target_link_libraries(
   PRIVATE ftxui::component)
 # 通用工具
 add_executable(dian-cli src/main.cpp src/foo.cpp)
-target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog
-                      nlohmann_json::nlohmann_json spdlog::spdlog)
+target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog spdlog::spdlog)
 # windows 特异的软件
 add_executable(win-dian-cli src/winmain.cpp src/wintools.cpp)
-target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog
-                      nlohmann_json::nlohmann_json)
+target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog)
 
 add_executable(win-dian-d src/winmaind.cpp src/wintools.cpp)
 target_link_options(win-dian-d PRIVATE "-mwindows")
-target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog
-                      nlohmann_json::nlohmann_json)
+target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog)
 
 add_executable(ime-dian-d src/imemain.cpp)
 target_link_libraries(ime-dian-d imm32 psapi shlwapi)
