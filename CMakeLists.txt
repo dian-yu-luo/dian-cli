@@ -12,7 +12,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/)
 # 将资源复制到输出目录
 foreach(RESOURCE ${RESOURCES})
   file(RELATIVE_PATH RESOURCE_PATH ${RESOURCES_DIR} ${RESOURCE})
-  configure_file(${RESOURCE} ${CMAKE_CURRENT_BINARY_DIR}/${RESOURCE_PATH}
+  configure_file(${RESOURCE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RESOURCE_PATH}
                  COPYONLY)
 endforeach()
 
@@ -63,7 +63,7 @@ add_executable(simple_test test/simple_test.cc)
 target_link_libraries(simple_test doctest::doctest)
 
 add_executable(json_test test/json_test.cc)
-target_link_libraries(json_test doctest::doctest jsoncpp_lib)
+target_link_libraries(json_test PRIVATE doctest::doctest jsoncpp_static)
 
 # 构建 tui测试文件
 add_executable(ftx_test test/ftx_test.cc)
@@ -84,5 +84,5 @@ target_link_options(win-dian-d PRIVATE "-mwindows")
 target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog)
 
 add_executable(ime-dian-d src/imemain.cpp)
-target_link_libraries(ime-dian-d imm32 psapi shlwapi)
+target_link_libraries(ime-dian-d imm32 psapi shlwapi jsoncpp_static)
 set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
