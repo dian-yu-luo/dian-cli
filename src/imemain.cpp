@@ -1,6 +1,3 @@
-/*
-g++ imemain.cpp -o ime.exe -limm32  -lShlwapi -lpsapi -mwindows
-*/
 
 #include <Windows.h> // Windows API 核心函数和数据类型。
 #include <WinUser.h>
@@ -11,11 +8,12 @@ g++ imemain.cpp -o ime.exe -limm32  -lShlwapi -lpsapi -mwindows
 #include <fstream>
 #include <Shlwapi.h>
 #include <json/json.h>
-
+#include <set>
+#include <string>
 // Global variable.
 HWINEVENTHOOK g_hook;
 std::string filename = "config_ime.json";
-Json::Value root;
+std::set<std::string> softwareset;
 
 VOID CALLBACK WinEventsProc(HWINEVENTHOOK hWinEventHook, DWORD dwEvent, HWND hwnd, LONG idObject, LONG idChild, DWORD dwEventThread, DWORD dwmsEventTime)
 {
@@ -34,36 +32,31 @@ VOID CALLBACK WinEventsProc(HWINEVENTHOOK hWinEventHook, DWORD dwEvent, HWND hwn
             if (GetModuleFileNameExA(hProcess, NULL, FileName, MAX_PATH))
             {
                 LPSTR BaseName = PathFindFileNameA(FileName);
-                // 进程的可执行文件名保存在buffer中
-                std::cout
-                    << BaseName << " --";
-                std::cout << processId << "\n";
-                std::ofstream log_file("ime.log", std::ios_base::app);
-                if (log_file.is_open())
+                std::string strBaseName(BaseName);
+                if (softwareset.find(strBaseName) != softwareset.end())
                 {
-                    log_file << BaseName << std::endl;
-                    log_file.close();
+                    constexpr LPARAM IMC_GETOPENSTATUS = 5;
+                    constexpr LPARAM IMC_SETOPENSTATUS = 6;
+                    auto ime = ImmGetDefaultIMEWnd(hwnd);
+                    LPARAM stat;
+                    stat = SendMessage(ime, WM_IME_CONTROL, IMC_GETOPENSTATUS, 0);
+                    std::printf("init ime state: %d\n", stat);
+                    SendMessage(ime, WM_IME_CONTROL, IMC_SETOPENSTATUS, 0);
+                    stat = SendMessage(ime, WM_IME_CONTROL, IMC_GETOPENSTATUS, 0);
+
+                    std::printf("current ime state: %d\n\n", stat);
+                    // 存在
                 }
                 else
                 {
-                    std::cerr << "Failed to open log file." << std::endl;
                 }
+                // 进程的可执行文件名保存在buffer中
             }
             CloseHandle(hProcess);
         }
 
         // if (_tcscmp(szClassName, _T("Windows.UI.Core.CoreWindow")) == 0)
         // {
-        //     constexpr LPARAM IMC_GETOPENSTATUS = 5;
-        //     constexpr LPARAM IMC_SETOPENSTATUS = 6;
-        //     auto ime = ImmGetDefaultIMEWnd(hwnd);
-        //     LPARAM stat;
-        //     stat = SendMessage(ime, WM_IME_CONTROL, IMC_GETOPENSTATUS, 0);
-        //     std::printf("init ime state: %d\n", stat);
-        //     SendMessage(ime, WM_IME_CONTROL, IMC_SETOPENSTATUS, 0);
-        //     stat = SendMessage(ime, WM_IME_CONTROL, IMC_GETOPENSTATUS, 0);
-
-        //     std::printf("current ime state: %d\n\n", stat);
         // }
     }
 }
@@ -84,19 +77,29 @@ void ShutdownMSAA()
 int main(int argc, char const *argv[])
 {
     std::ifstream file(filename);
+    Json::Value root;
     if (file.fail())
     {
+        // 如果配置文件不存在退出
         std::cout << filename << " doesn't exist, creating new JSON file" << std::endl;
         root["software"] = Json::arrayValue;
         std::ofstream outfile(filename);
         outfile << root << std::endl;
         outfile.close();
+        return 0;
     }
     else
     {
         file >> root;
         file.close();
         std::cout << root << std::endl;
+        Json::Value softwareArray = root["software"];
+        for (Json::Value::const_iterator itr = softwareArray.begin(); itr != softwareArray.end(); itr++)
+        {
+            std::string software = (*itr).asString();
+            softwareset.insert(software);
+            std::cout << software << "\n";
+        }
     }
 
     printf("start\n");
