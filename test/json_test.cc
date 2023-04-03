@@ -5,7 +5,6 @@
 
 TEST_CASE("test res")
 {
-    printf("hello\nhello\nifa>b\n");
     for (int i = 0; i < 100; ++i)
     {
         std::cout << i << std::endl;
