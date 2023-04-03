@@ -1,5 +1,5 @@
 /*
-g++ ime.cpp -o ime.exe -limm32 -mwindows
+g++ imemain.cpp -o ime.exe -limm32  -lShlwapi -lpsapi -mwindows
 */
 
 #include <Windows.h> // Windows API 核心函数和数据类型。
