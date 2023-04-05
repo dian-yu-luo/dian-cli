@@ -3,7 +3,7 @@
 #include <fstream>
 #include <json/json.h>
 
-TEST_CASE("test res")
+TEST_CASE("testres")
 {
     std::string filename = "example.json";
     std::ifstream file(filename);

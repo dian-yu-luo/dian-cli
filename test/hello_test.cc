@@ -5,8 +5,8 @@
 #include <spdlog/spdlog.h>
 
 TEST_CASE("this") {
-    printf("hello");
-    for (int i = 0; i < 100; ++i) {
+    printf("hello\n");
+    for (int i = 0; i < 10; ++i) {
         std::cout << i << std::endl;
     }
 }

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.25)
 
 project(dian-cli)
 
@@ -24,17 +24,23 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(cxxopts)
 
 # 当我想看一眼ftxui 的样例的时候把下面注释掉
-set(FTXUI_BUILD_EXAMPLES OFF)
-FetchContent_Declare(
-  ftxui
-  GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
-  GIT_TAG v4.0.0)
+# set(FTXUI_BUILD_EXAMPLES OFF)
+# FetchContent_Declare(
+#   ftxui
+#   GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
+#   GIT_TAG v4.0.0)
 
-FetchContent_GetProperties(ftxui)
-if(NOT ftxui_POPULATED)
-  FetchContent_Populate(ftxui)
-  add_subdirectory(${ftxui_SOURCE_DIR} ${ftxui_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
+# FetchContent_GetProperties(ftxui)
+# if(NOT ftxui_POPULATED)
+#   FetchContent_Populate(ftxui)
+#   add_subdirectory(${ftxui_SOURCE_DIR} ${ftxui_BINARY_DIR} EXCLUDE_FROM_ALL)
+# endif()
+# add_executable(ftx_test test/ftx_test.cc)
+# target_link_libraries(
+#   ftx_test
+#   PRIVATE ftxui::screen
+#   PRIVATE ftxui::dom
+#   PRIVATE ftxui::component)
 
 FetchContent_Declare(
   doctest
@@ -66,12 +72,6 @@ add_executable(json_test test/json_test.cc)
 target_link_libraries(json_test PRIVATE doctest::doctest jsoncpp_static)
 
 # 构建 tui测试文件
-add_executable(ftx_test test/ftx_test.cc)
-target_link_libraries(
-  ftx_test
-  PRIVATE ftxui::screen
-  PRIVATE ftxui::dom
-  PRIVATE ftxui::component)
 # 通用工具
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog spdlog::spdlog)
@@ -83,6 +83,6 @@ add_executable(win-dian-d src/winmaind.cpp src/wintools.cpp)
 target_link_options(win-dian-d PRIVATE "-mwindows")
 target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog)
 
-add_executable(ime-dian-d src/imemain.cpp)
-target_link_libraries(ime-dian-d imm32 psapi shlwapi jsoncpp_static)
-set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
+# add_executable(ime-dian-d src/imemain.cpp)
+# target_link_libraries(ime-dian-d imm32 psapi shlwapi jsoncpp_static)
+# set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
