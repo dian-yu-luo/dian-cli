@@ -4,13 +4,24 @@ gcc -o dianswitch.exe dianswitch.c
 
 #include <stdio.h>
 #include <windows.h>
-
+char *convertToGbk(wchar_t *utf16_str) {
+    char *gbk_str = malloc(1024);
+    WideCharToMultiByte(CP_ACP, 0, utf16_str, 1024, gbk_str, 1024, NULL, NULL);
+    return gbk_str;
+}
 BOOL CALLBACK enum_windows_callback(HWND hwnd, LPARAM lParam) {
     if (!IsWindowVisible(hwnd) || !IsWindowEnabled(hwnd)) {
         return TRUE;
     }
     char title[1024];
     if (GetWindowText(hwnd, title, sizeof(title)) > 0) {
+        if (strcmp(title, convertToGbk(L"媒体播放器")) == 0 ||
+            strcmp(title, "NVIDIA GeForce Overlay") == 0 ||
+            strcmp(title, "MainWindow") == 0 ||
+            strcmp(title, "Microsoft Text Input Application") == 0 ||
+            strcmp(title, "Program Manager") == 0) {
+            return TRUE;
+        }
         printf("%s\n", title);
     }
     return TRUE;
