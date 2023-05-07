@@ -1,5 +1,5 @@
 #include <cstdio>
-#include <sec_api/stdio_s.h>
+// #include <sec_api/stdio_s.h>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 #include <fstream>

@@ -15,8 +15,7 @@ BOOL CALLBACK enum_windows_callback(HWND hwnd, LPARAM lParam) {
     }
     char title[1024];
     if (GetWindowText(hwnd, title, sizeof(title)) > 0) {
-        if (strcmp(title, convertToGbk(L"媒体播放器")) == 0 ||
-            strcmp(title, "NVIDIA GeForce Overlay") == 0 ||
+        if (strcmp(title, "NVIDIA GeForce Overlay") == 0 ||
             strcmp(title, "MainWindow") == 0 ||
             strcmp(title, "Microsoft Text Input Application") == 0 ||
             strcmp(title, "Program Manager") == 0) {
