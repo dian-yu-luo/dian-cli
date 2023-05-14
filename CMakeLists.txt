@@ -23,24 +23,6 @@ FetchContent_Declare(
   GIT_TAG v3.1.1)
 FetchContent_MakeAvailable(cxxopts)
 
-# 当我想看一眼ftxui 的样例的时候把下面注释掉
-# set(FTXUI_BUILD_EXAMPLES OFF)
-# FetchContent_Declare(
-#   ftxui
-#   GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
-#   GIT_TAG v4.0.0)
-
-# FetchContent_GetProperties(ftxui)
-# if(NOT ftxui_POPULATED)
-#   FetchContent_Populate(ftxui)
-#   add_subdirectory(${ftxui_SOURCE_DIR} ${ftxui_BINARY_DIR} EXCLUDE_FROM_ALL)
-# endif()
-# add_executable(ftx_test test/ftx_test.cc)
-# target_link_libraries(
-#   ftx_test
-#   PRIVATE ftxui::screen
-#   PRIVATE ftxui::dom
-#   PRIVATE ftxui::component)
 
 FetchContent_Declare(
   doctest
