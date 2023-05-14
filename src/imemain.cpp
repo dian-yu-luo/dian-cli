@@ -1,21 +1,22 @@
 
-#include <Windows.h> // Windows API 核心函数和数据类型。
-#include <WinUser.h>
-#include <oleacc.h> // MSAA（Microsoft Active Accessibility）API。
-#include <iostream>
-#include <tchar.h> // TCHAR 类型及相关函数。
-#include <psapi.h>
-#include <fstream>
 #include <Shlwapi.h>
-#include <json/json.h>
+#include <WinUser.h>
+#include <Windows.h> // Windows API 核心函数和数据类型。
+#include <fstream>
+#include <iostream>
+#include <nlohmann/json.hpp>
+#include <oleacc.h> // MSAA（Microsoft Active Accessibility）API。
+#include <psapi.h>
 #include <set>
 #include <string>
+#include <tchar.h> // TCHAR 类型及相关函数。
 // Global variable.
 HWINEVENTHOOK g_hook;
 std::string filename = "config_ime.json";
 std::set<std::string> softwareset;
 
-VOID CALLBACK WinEventsProc(HWINEVENTHOOK hWinEventHook, DWORD dwEvent, HWND hwnd, LONG idObject, LONG idChild, DWORD dwEventThread, DWORD dwmsEventTime)
+VOID CALLBACK WinEventsProc(HWINEVENTHOOK hWinEventHook, DWORD dwEvent, HWND hwnd, LONG idObject, LONG idChild,
+                            DWORD dwEventThread, DWORD dwmsEventTime)
 {
 
     if (dwEvent == EVENT_OBJECT_FOCUS)
@@ -77,14 +78,15 @@ void ShutdownMSAA()
 int main(int argc, char const *argv[])
 {
     std::ifstream file(filename);
-    Json::Value root;
+    nlohmann::json root;
+
     if (file.fail())
     {
         // 如果配置文件不存在退出
         std::cout << filename << " doesn't exist, creating new JSON file" << std::endl;
-        root["software"] = Json::arrayValue;
+        root["software"] = nlohmann::json::array();
         std::ofstream outfile(filename);
-        outfile << root << std::endl;
+        outfile << root.dump(4) << std::endl;
         outfile.close();
         return 0;
     }
@@ -93,12 +95,12 @@ int main(int argc, char const *argv[])
         file >> root;
         file.close();
         std::cout << root << std::endl;
-        Json::Value softwareArray = root["software"];
-        for (Json::Value::const_iterator itr = softwareArray.begin(); itr != softwareArray.end(); itr++)
+        auto softwareArray = root["software"];
+        for (auto &software : softwareArray)
         {
-            std::string software = (*itr).asString();
-            softwareset.insert(software);
-            std::cout << software << "\n";
+            std::string name = software.get<std::string>();
+            softwareset.insert(name);
+            std::cout << name << "\n";
         }
     }
 
