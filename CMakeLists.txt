@@ -16,13 +16,6 @@ foreach(RESOURCE ${RESOURCES})
                  COPYONLY)
 endforeach()
 
-include(FetchContent)
-FetchContent_Declare(
-  cxxopts
-  GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
-  GIT_TAG v3.1.1)
-FetchContent_MakeAvailable(cxxopts)
-
 
 FetchContent_Declare(
   doctest
@@ -56,14 +49,14 @@ target_link_libraries(json_test PRIVATE doctest::doctest jsoncpp_static)
 # 构建 tui测试文件
 # 通用工具
 add_executable(dian-cli src/main.cpp src/foo.cpp)
-target_link_libraries(dian-cli cxxopts::cxxopts spdlog::spdlog spdlog::spdlog)
+target_link_libraries(dian-cli  spdlog::spdlog spdlog::spdlog)
 # windows 特异的软件
 add_executable(win-dian-cli src/winmain.cpp src/wintools.cpp)
-target_link_libraries(win-dian-cli cxxopts::cxxopts spdlog::spdlog)
+target_link_libraries(win-dian-cli  spdlog::spdlog)
 
 add_executable(win-dian-d src/winmaind.cpp src/wintools.cpp)
 target_link_options(win-dian-d PRIVATE "-mwindows")
-target_link_libraries(win-dian-d cxxopts::cxxopts spdlog::spdlog)
+target_link_libraries(win-dian-d  spdlog::spdlog)
 
 add_executable(dianswitch src/dianswitch.c)
 

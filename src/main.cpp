@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <thread>
 #include <string>
-#include <cxxopts.hpp>
+
 
 void usecmd(std::string str) {
     system(str.c_str());
