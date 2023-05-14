@@ -16,6 +16,7 @@ foreach(RESOURCE ${RESOURCES})
                  COPYONLY)
 endforeach()
 
+include(FetchContent)
 
 FetchContent_Declare(
   doctest
@@ -24,10 +25,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(doctest)
 
 FetchContent_Declare(
-  jsoncpp
-  GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
-  GIT_TAG 1.9.4)
-FetchContent_MakeAvailable(jsoncpp)
+  json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.11.1)
+FetchContent_MakeAvailable(json)
 
 # 下载和构建 spdlog 库
 FetchContent_Declare(
@@ -43,10 +44,7 @@ target_link_libraries(hello_test doctest::doctest spdlog::spdlog)
 add_executable(simple_test test/simple_test.cc)
 target_link_libraries(simple_test doctest::doctest)
 
-add_executable(json_test test/json_test.cc)
-target_link_libraries(json_test PRIVATE doctest::doctest jsoncpp_static)
 
-# 构建 tui测试文件
 # 通用工具
 add_executable(dian-cli src/main.cpp src/foo.cpp)
 target_link_libraries(dian-cli  spdlog::spdlog spdlog::spdlog)
@@ -64,7 +62,8 @@ add_executable(zenhan src/zenhan.cpp)
 target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(zenhan imm32)
 
-add_executable(ime-dian-d src/imemain.cpp)
-target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
-target_link_libraries(ime-dian-d imm32 psapi shlwapi jsoncpp_static)
+# add_executable(ime-dian-d src/imemain.cpp)
+# target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
+# target_link_libraries(ime-dian-d imm32 psapi shlwapi jsoncpp_static)
+
 # set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
