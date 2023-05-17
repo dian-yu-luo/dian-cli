@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.25)
 project(dian-cli)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
 
 # 添加资源目录
 set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/res)
@@ -29,6 +30,13 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/nlohmann/json.git
   GIT_TAG v3.11.1)
 FetchContent_MakeAvailable(json)
+
+include(FetchContent)
+FetchContent_Declare(
+  cxxopts
+  GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
+  GIT_TAG v3.1.1)
+FetchContent_MakeAvailable(cxxopts)
 
 # 下载和构建 spdlog 库
 FetchContent_Declare(
