@@ -1,5 +1,5 @@
 //  g++ -std=c++11 -mwindows zenhan.cpp -o zenhan.exe -limm32
- 
+
 #include <cstdio>
 #include <cstdlib>
 #include <windows.h>
@@ -28,6 +28,6 @@ int main(int argc, char **argv)
         SendMessage(ime, WM_IME_CONTROL, IMC_SETOPENSTATUS, stat);
     }
     std::printf("%d\n", stat);
-    
+
     return 0;
 }

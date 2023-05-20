@@ -1,7 +1,7 @@
-#include <wintools.hpp>
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
+#include <wintools.hpp>
 
 int main()
 {

@@ -4,9 +4,11 @@
 #include <fstream>
 #include <spdlog/spdlog.h>
 
-TEST_CASE("this") {
+TEST_CASE("this")
+{
     printf("hello\n");
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i)
+    {
         std::cout << i << std::endl;
     }
 }
@@ -21,12 +23,12 @@ TEST_CASE("hello endz")
     printf("我的大兄弟啊\n");
     // Expect two strings not to be equal.
 
-    for (size_t i = 0; i < 100; i++) {
+    for (size_t i = 0; i < 100; i++)
+    {
         i++;
     }
     printf("hello\n");
 }
-
 
 TEST_CASE("hellozz end")
 {

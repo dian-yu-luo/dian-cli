@@ -8,13 +8,16 @@
 #include <vector>
 
 using namespace std;
-TEST_CASE("push back") {
+TEST_CASE("push back")
+{
     vector<int> a;
     a.push_back(2);
-    if (18 > 16) {
+    if (18 > 16)
+    {
         printf("hello\n");
     }
-    for (size_t i = 0; i < 100; i++) {
+    for (size_t i = 0; i < 100; i++)
+    {
     }
     printf("const char *format, ...");
     printf("this");
@@ -22,23 +25,28 @@ TEST_CASE("push back") {
 }
 
 #ifdef NOT_COMPILE
-TEST_CASE("test res") {
+TEST_CASE("test res")
+{
     std::string filename = "example.json";
     std::ifstream file(filename);
     Json::Value root;
-    if (file.fail()) {
-        std::cout << filename << " doesn't exist, creating new JSON file"
-                  << std::endl;
+    if (file.fail())
+    {
+        std::cout << filename << " doesn't exist, creating new JSON file" << std::endl;
         root["software"] = Json::arrayValue;
         std::ofstream outfile(filename);
         outfile << root << std::endl;
         outfile.close();
-    } else {
+    }
+    else
+    {
         file >> root;
         file.close();
         std::cout << root << std::endl;
     }
 }
 
-TEST_CASE("json test") {}
+TEST_CASE("json test")
+{
+}
 #endif

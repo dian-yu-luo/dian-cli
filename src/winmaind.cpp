@@ -1,6 +1,6 @@
+#include <fstream>
 #include <iostream>
 #include <windows.h>
-#include <fstream>
 int main(int argc, char const *argv[])
 {
     using namespace std;
