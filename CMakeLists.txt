@@ -65,13 +65,14 @@ target_link_options(win-dian-d PRIVATE "-mwindows")
 target_link_libraries(win-dian-d  spdlog::spdlog)
 
 add_executable(dianswitch src/dianswitch.c)
+add_executable(winAtStart src/winAtStart.cpp)
 
 add_executable(zenhan src/zenhan.cpp)
 target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(zenhan imm32)
 
-add_executable(ime-dian-d src/imemain.cpp)
-target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
-target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
+# add_executable(ime-dian-d src/imemain.cpp)
+# target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
+# target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
 
 # set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
