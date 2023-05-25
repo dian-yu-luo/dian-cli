@@ -4,16 +4,25 @@
 #include <fstream>
 #include <spdlog/spdlog.h>
 
-TEST_CASE("this")
-{
-    printf("hello\n");
-    for (int i = 0; i < 10; ++i)
-    {
-        std::cout << i << std::endl;
+#include <filesystem>
+TEST_CASE("get current path"){
+    std::filesystem::path path = std::filesystem::current_path();
+    std::cout << "Executable path: " << path << '\n';
+    for (const auto & entry : std::filesystem::directory_iterator(path)) {
+        std::cout << entry.path() << std::endl; // 输出文件名
     }
 }
 
 #ifdef NOT_COMPILE
+TEST_CASE("this")
+{
+    printf("hello\n");
+    for (int i = 0; i < 100; ++i)
+    {
+        std::cout << i <<  std::endl;
+    }
+}
+
 
 TEST_CASE("hello endz")
 {

@@ -66,6 +66,8 @@ target_link_libraries(win-dian-d  spdlog::spdlog)
 
 add_executable(dianswitch src/dianswitch.c)
 add_executable(winAtStart src/winAtStart.cpp)
+add_executable(test src/test.cpp)
+add_executable(dianrm src/dianrm.cpp)
 
 add_executable(zenhan src/zenhan.cpp)
 target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
