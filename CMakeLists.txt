@@ -9,7 +9,7 @@ if(MSVC)
     string(REPLACE "\\" "/" USERPROFILE "$ENV{USERPROFILE}")
 endif()
 
-set(CMAKE_INSTALL_PREFIX "${USERPROFILE}/diancli")
+set(CMAKE_INSTALL_PREFIX "${USERPROFILE}/dian-cli")
 
 
 if(MSVC)
@@ -89,6 +89,8 @@ install(TARGETS zenhan DESTINATION bin)
 add_executable(ime-dian-d src/imemain.cpp)
 target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
+install(TARGETS ime-dian-d DESTINATION bin)
+install(FILES res/config_ime.json DESTINATION bin)
 
 
 # set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)
