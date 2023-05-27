@@ -29,4 +29,5 @@ git clone https://github.com/dian-yu-luo/dian-cli.git
 cd dian-cli
 cmake  -S. -Bbuild  
 cmake --build build --target install  
+
 ```
