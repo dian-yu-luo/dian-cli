@@ -23,3 +23,10 @@
 编译环境数确定的,只允许Windows 的msvc环境下编译,同时,需要cmake , git .有这些就足够编译了
 
 编译步骤
+
+``` bash
+git clone https://github.com/dian-yu-luo/dian-cli.git 
+cd dian-cli
+cmake  -S. -Bbuild  
+cmake --build build --target install  
+```
