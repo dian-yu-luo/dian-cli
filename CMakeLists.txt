@@ -4,9 +4,16 @@ project(dian-cli)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
+# 设置安装路径
+if(MSVC)
+    string(REPLACE "\\" "/" USERPROFILE "$ENV{USERPROFILE}")
+endif()
+
+set(CMAKE_INSTALL_PREFIX "${USERPROFILE}/diancli")
+
 
 if(MSVC)
-    add_compile_options(/wd4819)
+add_compile_options(/wd4819)
 endif()
 
 # 添加资源目录
@@ -16,18 +23,20 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/)
 
 # 将资源复制到输出目录
 foreach(RESOURCE ${RESOURCES})
-  file(RELATIVE_PATH RESOURCE_PATH ${RESOURCES_DIR} ${RESOURCE})
-  configure_file(${RESOURCE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RESOURCE_PATH}
-                 COPYONLY)
+file(RELATIVE_PATH RESOURCE_PATH ${RESOURCES_DIR} ${RESOURCE})
+configure_file(${RESOURCE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RESOURCE_PATH}
+COPYONLY)
 endforeach()
 
 include(FetchContent)
 
+set(DOCTEST_NO_INSTALL ON)
 FetchContent_Declare(
   doctest
   GIT_REPOSITORY https://github.com/onqtam/doctest.git
   GIT_TAG v2.4.11)
 FetchContent_MakeAvailable(doctest)
+
 
 FetchContent_Declare(
   json
@@ -75,6 +84,7 @@ add_executable(dianrm src/dianrm.cpp)
 add_executable(zenhan src/zenhan.cpp)
 target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(zenhan imm32)
+install(TARGETS zenhan DESTINATION bin)
 
 add_executable(ime-dian-d src/imemain.cpp)
 target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
