@@ -5,6 +5,10 @@ project(dian-cli)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
 
+if(MSVC)
+    add_compile_options(/wd4819)
+endif()
+
 # 添加资源目录
 set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/res)
 file(GLOB_RECURSE RESOURCES ${RESOURCES_DIR}/*)
@@ -61,11 +65,10 @@ add_executable(win-dian-cli src/winmain.cpp src/wintools.cpp)
 target_link_libraries(win-dian-cli  spdlog::spdlog)
 
 add_executable(win-dian-d src/winmaind.cpp src/wintools.cpp)
-target_link_options(win-dian-d PRIVATE "-mwindows")
+target_link_options(win-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(win-dian-d  spdlog::spdlog)
 
 add_executable(dianswitch src/dianswitch.c)
-add_executable(winAtStart src/winAtStart.cpp)
 add_executable(test src/test.cpp)
 add_executable(dianrm src/dianrm.cpp)
 
@@ -73,8 +76,9 @@ add_executable(zenhan src/zenhan.cpp)
 target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(zenhan imm32)
 
-# add_executable(ime-dian-d src/imemain.cpp)
-# target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
-# target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
+add_executable(ime-dian-d src/imemain.cpp)
+target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
+target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
+
 
 # set_target_properties(ime-dian-d PROPERTIES WIN32_EXECUTABLE true)

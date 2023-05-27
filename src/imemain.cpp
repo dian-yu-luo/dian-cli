@@ -10,6 +10,7 @@
 #include <set>
 #include <string>
 #include <tchar.h> // TCHAR 类型及相关函数。
+#include <thread>
 // Global variable.
 HWINEVENTHOOK g_hook;
 std::string filename = "config_ime.json";
@@ -75,10 +76,23 @@ void ShutdownMSAA()
 
 // Callback function that handles events.
 
+void restartWin()
+{
+    Sleep(300);
+    keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY, 0);
+    keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+    Sleep(500);
+    keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY, 0);
+    keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+}
+
 int main(int argc, char const *argv[])
 {
     std::ifstream file(filename);
     nlohmann::json root;
+
+    std::thread t(restartWin);
+    t.detach();
 
     if (file.fail())
     {

@@ -20,13 +20,12 @@ void remove_directory(const fs::path &path)
 
         if (ec)
         {
-            std::cerr << "Error removing file/directory: " << ec.message() << '\n';
+            std::cerr << "Error removing file/directory: " << path << '\n';
         }
     }
 }
 int main(int argc, char const *argv[])
 {
-    std::cout << argv[1];
     remove_directory(argv[1]);
     return 0;
 }
