@@ -9,6 +9,11 @@ if(MSVC)
     string(REPLACE "\\" "/" USERPROFILE "$ENV{USERPROFILE}")
 endif()
 
+if(UNIX)
+    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+endif()
+
+
 set(CMAKE_INSTALL_PREFIX "${USERPROFILE}/dian-cli")
 
 
@@ -52,6 +57,7 @@ target_link_options(win-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStart
 target_link_libraries(win-dian-d  spdlog::spdlog)
 
 add_executable(dianswitch src/dianswitch.c)
+install(TARGETS dianswitch DESTINATION bin)
 add_executable(test src/test.cpp)
 add_executable(dianrm src/dianrm.cpp)
 
