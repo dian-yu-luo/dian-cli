@@ -8,15 +8,13 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
 if(MSVC)
     string(REPLACE "\\" "/" USERPROFILE "$ENV{USERPROFILE}")
 endif()
+set(CMAKE_INSTALL_PREFIX "${USERPROFILE}/dian-cli")
 
 if(UNIX)
     set(CMAKE_THREAD_LIBS_INIT "-lpthread")
 endif()
 
-
-set(CMAKE_INSTALL_PREFIX "${USERPROFILE}/dian-cli")
-
-
+# 屏蔽因为字符集可能导致的错误
 if(MSVC)
 add_compile_options(/wd4819)
 endif()
@@ -32,7 +30,7 @@ file(RELATIVE_PATH RESOURCE_PATH ${RESOURCES_DIR} ${RESOURCE})
 configure_file(${RESOURCE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RESOURCE_PATH}
 COPYONLY)
 endforeach()
-
+# 依赖项的位置
 include(cmake/deps.cmake)
 
 include_directories(include)
@@ -58,6 +56,7 @@ target_link_libraries(win-dian-d  spdlog::spdlog)
 
 add_executable(dianswitch src/dianswitch.c)
 install(TARGETS dianswitch DESTINATION bin)
+
 add_executable(test src/test.cpp)
 add_executable(dianrm src/dianrm.cpp)
 

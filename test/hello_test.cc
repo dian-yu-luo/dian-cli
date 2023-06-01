@@ -4,25 +4,51 @@
 #include <fstream>
 #include <spdlog/spdlog.h>
 
+TEST_CASE("print")
+{
+    printf("hello\n");
+}
+
+#ifdef NOT_COMPILE
+#include <Windows.h>
+TEST_CASE("pos")
+{
+#include <windows.h>
+
+    while (true)
+    {
+        POINT p;
+        if (GetAsyncKeyState(VK_SPACE))
+        {                                                  // 检查空格键是否被按下
+            p.x = 700;                                     // 设置鼠标点击的横坐标
+            p.y = 700;                                     // 设置鼠标点击的纵坐标
+            SetCursorPos(p.x, p.y);                        // 将鼠标移动到指定位置
+            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0); // 模拟鼠标左键按下事件
+            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);   // 模拟鼠标左键释放事件
+            Sleep(10);                                     // 等待10毫秒
+        }
+    }
+}
+
 #include <filesystem>
-TEST_CASE("get current path"){
+TEST_CASE("get current path")
+{
     std::filesystem::path path = std::filesystem::current_path();
     std::cout << "Executable path: " << path << '\n';
-    for (const auto & entry : std::filesystem::directory_iterator(path)) {
+    for (const auto &entry : std::filesystem::directory_iterator(path))
+    {
         std::cout << entry.path() << std::endl; // 输出文件名
     }
 }
 
-#ifdef NOT_COMPILE
 TEST_CASE("this")
 {
     printf("hello\n");
     for (int i = 0; i < 100; ++i)
     {
-        std::cout << i <<  std::endl;
+        std::cout << i << std::endl;
     }
 }
-
 
 TEST_CASE("hello endz")
 {

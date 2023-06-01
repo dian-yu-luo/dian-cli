@@ -84,9 +84,9 @@ void restartWin()
     Sleep(500);
     keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY, 0);
     keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
-    for (size_t i = 0; i < 20; i++)
-    {
-        Sleep(100);
+    // for (size_t i = 0; i < 20; i++)
+    // {
+        Sleep(500);
         HWND foregroundWnd = GetForegroundWindow();
         char windowTitle[256];
         GetWindowText(foregroundWnd, windowTitle, sizeof(windowTitle));
@@ -95,7 +95,7 @@ void restartWin()
             keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY, 0);
             keybd_event(VK_LWIN, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         }
-    }
+    // }
 }
 
 int main(int argc, char const *argv[])
