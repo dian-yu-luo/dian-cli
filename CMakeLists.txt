@@ -65,6 +65,7 @@ target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(zenhan imm32)
 install(TARGETS zenhan DESTINATION bin)
 
+# execute_process(COMMAND powershell "taskkill /F /IM ime-dian-d.exe")
 add_executable(ime-dian-d src/imemain.cpp)
 target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
