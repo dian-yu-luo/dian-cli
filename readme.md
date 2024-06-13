@@ -31,3 +31,5 @@ cmake  -S. -Bbuild
 cmake --build build --target install  
 
 ```
+## 安装依赖
+https://aka.ms/vs/17/release/vc_redist.x64.exe
