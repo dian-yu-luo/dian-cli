@@ -3,7 +3,10 @@ cmake_minimum_required(VERSION 3.25)
 project(dian-cli)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+
 # 设置安装路径
 if(MSVC)
     string(REPLACE "\\" "/" USERPROFILE "$ENV{USERPROFILE}")
@@ -65,7 +68,15 @@ target_link_options(zenhan PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(zenhan imm32)
 install(TARGETS zenhan DESTINATION bin)
 
-# execute_process(COMMAND powershell "taskkill /F /IM ime-dian-d.exe")
+# 在 install 阶段执行 taskkill 命令
+install(CODE "
+    execute_process(
+        COMMAND powershell  \"taskkill /F /IM ime-dian-d.exe\"
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE output
+        ERROR_VARIABLE error
+    )
+")
 add_executable(ime-dian-d src/imemain.cpp)
 target_link_options(ime-dian-d PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 target_link_libraries(ime-dian-d imm32 psapi shlwapi nlohmann_json::nlohmann_json)
