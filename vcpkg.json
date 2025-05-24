@@ -4,7 +4,8 @@
     "dependencies": [
         "gtest",
         "boost",
-        "spdlog"
+        "spdlog",
+        "nlohmann-json"
     ],
     "overrides": [
         {
